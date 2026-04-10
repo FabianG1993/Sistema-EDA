@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema EDA - Herramienta profesional de Análisis Exploratorio de Datos interactivo">
+    <title>Sistema EDA | Análisis Exploratorio de Datos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>EDA<span class="logo-accent">Pro</span></span>
+            </div>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#upload" class="nav-link active" data-section="upload"><i class="fas fa-cloud-upload-alt"></i><span>Cargar Datos</span></a></li>
+            <li><a href="#structure" class="nav-link disabled" data-section="structure"><i class="fas fa-th-large"></i><span>Estructura</span></a></li>
+            <li><a href="#types" class="nav-link disabled" data-section="types"><i class="fas fa-tags"></i><span>Tipos de Variables</span></a></li>
+            <li><a href="#missing" class="nav-link disabled" data-section="missing"><i class="fas fa-exclamation-triangle"></i><span>Valores Nulos</span></a></li>
+            <li><a href="#descriptive" class="nav-link disabled" data-section="descriptive"><i class="fas fa-calculator"></i><span>Estadísticas</span></a></li>
+            <li><a href="#distribution" class="nav-link disabled" data-section="distribution"><i class="fas fa-chart-bar"></i><span>Distribución</span></a></li>
+            <li><a href="#outliers" class="nav-link disabled" data-section="outliers"><i class="fas fa-dot-circle"></i><span>Outliers</span></a></li>
+            <li><a href="#bivariate" class="nav-link disabled" data-section="bivariate"><i class="fas fa-project-diagram"></i><span>Relaciones</span></a></li>
+            <li><a href="#correlation" class="nav-link disabled" data-section="correlation"><i class="fas fa-border-all"></i><span>Correlaciones</span></a></li>
+            <li><a href="#visualizations" class="nav-link disabled" data-section="visualizations"><i class="fas fa-chart-pie"></i><span>Visualizaciones</span></a></li>
+            <li><a href="#duplicates" class="nav-link disabled" data-section="duplicates"><i class="fas fa-clone"></i><span>Duplicados</span></a></li>
+            <li><a href="#quality" class="nav-link disabled" data-section="quality"><i class="fas fa-check-double"></i><span>Calidad</span></a></li>
+            <li><a href="#findings" class="nav-link disabled" data-section="findings"><i class="fas fa-lightbulb"></i><span>Hallazgos</span></a></li>
+            <li><a href="#nextsteps" class="nav-link disabled" data-section="nextsteps"><i class="fas fa-rocket"></i><span>Próximos Pasos</span></a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="exportPdfBtn" class="btn-export disabled" disabled>
+                <i class="fas fa-file-pdf"></i>
+                <span>Exportar PDF</span>
+            </button>
+            <button id="exportMdBtn" class="btn-export-secondary disabled" disabled>
+                <i class="fas fa-file-alt"></i>
+                <span>Exportar Markdown</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <header class="topbar">
+            <button id="sidebarToggle" class="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-info">
+                <h2 id="sectionTitle">Cargar Datos</h2>
+                <span class="topbar-step" id="stepIndicator">Paso 1 de 14</span>
+            </div>
+            <div class="topbar-actions">
+                <div class="dataset-info" id="datasetInfo" style="display:none;">
+                    <span><i class="fas fa-table"></i> <span id="datasetName">-</span></span>
+                    <span class="separator">|</span>
+                    <span><i class="fas fa-columns"></i> <span id="colCount">0</span> columnas</span>
+                    <span class="separator">|</span>
+                    <span><i class="fas fa-rows"></i> <span id="rowCount">0</span> filas</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Scrollable Content Area -->
+        <div class="content-area" id="contentArea">
+
+            <!-- Section 1: Upload -->
+            <section id="upload" class="section active">
+                <div class="upload-zone" id="dropZone">
+                    <div class="upload-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <div class="upload-pulse"></div>
+                    </div>
+                    <h2>Arrastra tu archivo CSV aquí</h2>
+                    <p>o haz clic para seleccionar un archivo</p>
+                    <input type="file" id="fileInput" accept=".csv,.tsv,.txt" hidden>
+                    <div class="upload-actions" style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+                        <button class="btn-primary" id="browseBtn">
+                            <i class="fas fa-folder-open"></i> Explorar Archivos
+                        </button>
+                        <button class="btn-secondary" id="loadSampleBtn" style="border-color:var(--accent-purple); color:var(--accent-purple)">
+                            <i class="fas fa-vial"></i> Usar Datos de Ejemplo
+                        </button>
+                    </div>
+                    <div class="upload-formats">
+                        <span>Formatos soportados:</span>
+                        <span class="format-badge">CSV</span>
+                        <span class="format-badge">TSV</span>
+                        <span class="format-badge">TXT</span>
+                    </div>
+                </div>
+                <div id="uploadProgress" class="upload-progress" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">Procesando...</p>
+                </div>
+                <!-- Data Preview after upload -->
+                <div id="dataPreview" class="data-preview" style="display:none;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-eye"></i> Vista Previa de Datos</h3>
+                            <span class="badge" id="previewBadge">Primeras 20 filas</span>
+                        </div>
+                        <div class="table-wrapper">
+                            <table id="previewTable" class="data-table"></table>
+                        </div>
+                    </div>
+                    <button class="btn-primary btn-lg" id="startAnalysis">
+                        <i class="fas fa-play"></i> Iniciar Análisis Completo
+                    </button>
+                </div>
+            </section>
+
+            <!-- Section 2: Structure -->
+            <section id="structure" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-th-large"></i> Estructura y Dimensiones</h2>
+                    <p>Información general sobre la estructura del dataset</p>
+                </div>
+                <div class="metrics-grid" id="structureMetrics"></div>
+                <div class="card" id="structureDetails"></div>
+            </section>
+
+            <!-- Section 3: Variable Types -->
+            <section id="types" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-tags"></i> Tipos de Variables</h2>
+                    <p>Clasificación de cada columna según su tipo de dato</p>
+                </div>
+                <div class="grid-2" id="typesContent"></div>
+            </section>
+
+            <!-- Section 4: Missing Values -->
+            <section id="missing" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Valores Nulos / Missing</h2>
+                    <p>Detección y análisis de datos faltantes</p>
+                </div>
+                <div class="metrics-grid" id="missingMetrics"></div>
+                <div class="grid-2" id="missingContent"></div>
+            </section>
+
+            <!-- Section 5: Descriptive Stats -->
+            <section id="descriptive" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-calculator"></i> Estadísticas Descriptivas</h2>
+                    <p>Resumen estadístico completo de variables numéricas y categóricas</p>
+                </div>
+                <div id="descriptiveContent"></div>
+            </section>
+
+            <!-- Section 6: Distribution -->
+            <section id="distribution" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-bar"></i> Distribución de Variables (Univariado)</h2>
+                    <p>Análisis de la distribución de las variables</p>
+                </div>
+                <div class="controls-bar" id="distControls"></div>
+                <div class="charts-grid" id="distributionCharts"></div>
+            </section>
+
+            <!-- Section 7: Outliers -->
+            <section id="outliers" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-dot-circle"></i> Valores Atípicos (Outliers)</h2>
+                    <p>Identificación de valores extremos usando el método IQR</p>
+                </div>
+                <div class="metrics-grid" id="outlierMetrics"></div>
+                <div id="outlierContent"></div>
+            </section>
+
+            <!-- Section 8: Bivariate -->
+            <section id="bivariate" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-project-diagram"></i> Relaciones entre Variables</h2>
+                    <p>Exploración bivariada y multivariada</p>
+                </div>
+                <div class="controls-bar" id="bivariateControls"></div>
+                <div class="charts-grid" id="bivariateCharts"></div>
+            </section>
+
+            <!-- Section 9: Correlation -->
+            <section id="correlation" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-border-all"></i> Matriz de Correlaciones</h2>
+                    <p>Análisis de las relaciones lineales entre variables numéricas</p>
+                </div>
+                <div id="correlationContent"></div>
+            </section>
+
+            <!-- Section 10: Key Visualizations -->
+            <section id="visualizations" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-chart-pie"></i> Visualizaciones Clave</h2>
+                    <p>Gráficos adicionales para comprender los datos</p>
+                </div>
+                <div class="charts-grid" id="keyVisualizations"></div>
+            </section>
+
+            <!-- Section 11: Duplicates -->
+            <section id="duplicates" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-clone"></i> Detección de Duplicados</h2>
+                    <p>Identificación de filas repetidas en el dataset</p>
+                </div>
+                <div class="metrics-grid" id="duplicateMetrics"></div>
+                <div id="duplicateContent"></div>
+            </section>
+
+            <!-- Section 12: Quality -->
+            <section id="quality" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-check-double"></i> Calidad y Consistencia</h2>
+                    <p>Validación integral de la calidad del dataset</p>
+                </div>
+                <div id="qualityContent"></div>
+            </section>
+
+            <!-- Section 13: Findings -->
+            <section id="findings" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-lightbulb"></i> Hallazgos Principales</h2>
+                    <p>Resumen ejecutivo de los descubrimientos del análisis</p>
+                </div>
+                <div id="findingsContent"></div>
+            </section>
+
+            <!-- Section 14: Next Steps -->
+            <section id="nextsteps" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-rocket"></i> Próximos Pasos</h2>
+                    <p>Recomendaciones para feature engineering y modelado</p>
+                </div>
+                <div id="nextstepsContent"></div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display:none;">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <p id="loadingText">Analizando datos...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" crossorigin="anonymous"></script>
+    <script src="eda-engine.js"></script>
+    <script src="charts.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
