@@ -1,29 +1,27 @@
 # 📊 EDAPro: Sistema de Análisis Exploratorio de Datos
 
-![EDAPro Preview](preview.png)
+**EDAPro** es una herramienta web de **Análisis Exploratorio de Datos (EDA)** totalmente gratuita y del lado del cliente. Diseñada para la comunidad de los datos, que permite procesar archivos CSV de forma instantánea, generando visualizaciones interactivas y reportes estadísticos profundos sin subir tus datos a ningún servidor.
 
-**EDAPro** es una herramienta web profesional de **Análisis Exploratorio de Datos (EDA)** totalmente gratuita y del lado del cliente. Diseñada para científicos de datos, analistas y entusiastas, permite procesar archivos CSV de forma instantánea, generando visualizaciones interactivas y reportes estadísticos profundos sin subir tus datos a ningún servidor.
+## ✨ Características principales
 
-## ✨ Características Principales
+El sistema realiza un flujo de trabajo de **14 pasos de análisis**:
 
-El sistema realiza un flujo de trabajo exhaustivo de **14 pasos de análisis**:
-
-1.  **Carga Inteligente**: Soporte para CSV, TSV y TXT con detección automática de delimitadores.
-2.  **Estructura y Dimensiones**: Resumen de filas, columnas y uso de memoria estimado.
-3.  **Clasificación de Variables**: Identificación automática de tipos numéricos, categóricos, booleanos y fechas.
-4.  **Análisis de Datos Faltantes**: Detección de nulos con métricas de completitud.
-5.  **Estadística Descriptiva**: Cálculo de media, desviación estándar, cuantiles, asimetría (skewness) y curtosis.
-6.  **Análisis Univariado**: Histogramas dinámicos y distribución de frecuencias.
+1.  **Carga inteligente**: Soporte para CSV, TSV y TXT con detección automática de delimitadores.
+2.  **Estructura y dimensiones**: Resumen de filas, columnas y uso de memoria estimado.
+3.  **Clasificación de variables**: Identificación automática de tipos numéricos, categóricos, booleanos y fechas.
+4.  **Análisis de datos faltantes**: Detección de nulos con métricas de completitud.
+5.  **Estadística descriptiva**: Cálculo de media, desviación estándar, cuantiles, asimetría (skewness) y curtosis.
+6.  **Análisis univariado**: Histogramas dinámicos y distribución de frecuencias.
 7.  **Detección de Outliers**: Identificación de valores atípicos mediante el método de Rango Intercuartílico (IQR).
-8.  **Análisis Bivariado**: Exploración de relaciones mediante diagramas de dispersión con muestreo determinista.
-9.  **Matriz de Correlación**: Mapa de calor interactivo con cálculo de coeficientes de Pearson.
-10. **Visualizaciones Clave**: Gráficos premium optimizados para la toma de decisiones.
-11. **Detección de Duplicados**: Identificación de filas idénticas y duplicados parciales.
-12. **Evaluación de Calidad**: Puntaje (Score) de calidad basado en criterios de consistencia y balance.
-13. **Generación de Hallazgos**: Motor inteligente que resume los descubrimientos más importantes.
-14. **Hoja de Ruta (Next Steps)**: Recomendaciones automáticas para limpieza, feature engineering y modelado.
+8.  **Análisis bivariado**: Exploración de relaciones mediante diagramas de dispersión con muestreo determinista.
+9.  **Matriz de correlación**: Mapa de calor interactivo con cálculo de coeficientes de Pearson.
+10. **Visualizaciones clave**: Gráficos premium optimizados para la toma de decisiones.
+11. **Detección de duplicados**: Identificación de filas idénticas y duplicados parciales.
+12. **Evaluación de calidad**: Puntaje (Score) de calidad basado en criterios de consistencia y balance.
+13. **Generación de hallazgos**: Motor inteligente que resume los descubrimientos más importantes.
+14. **Hoja de ruta (Next Steps)**: Recomendaciones automáticas para limpieza, feature engineering y modelado.
 
-## 🚀 Tecnologías Utilizadas
+## 🚀 Tecnologías utilizadas
 
 -   **Core**: HTML5 Semántico y JavaScript ES6+.
 -   **Estilos**: CSS3 con diseño *Premium Dark Mode*, animaciones de micro-interacción y layouts responsivos.
@@ -31,10 +29,10 @@ El sistema realiza un flujo de trabajo exhaustivo de **14 pasos de análisis**:
 -   **Procesamiento**: [PapaParse](https://www.papaparse.com/) para el análisis eficiente de archivos de gran tamaño.
 -   **Exportación**: [jsPDF](https://github.com/parallax/jsPDF) y [html2canvas](https://html2canvas.hertzen.com/) para la generación de reportes en PDF.
 
-## 🛠️ Cómo Utilizarlo
+## 🛠️ Cómo utilizarlo
 
 1.  **Clona o descarga** el repositorio.
-2.  Abre `index.html` en tu navegador favorito (no requiere servidor backend).
+2.  Abre `index.html` en tu navegador (no requiere servidor backend).
 3.  **Arrastra y suelta** tu archivo CSV en la zona de carga.
 4.  Haz clic en **"Iniciar Análisis Completo"** y navega por el panel lateral para explorar los resultados.
 5.  **Exporta** tus hallazgos en formato PDF o Markdown para compartirlos.
@@ -50,4 +48,3 @@ El proyecto está estructurado de forma modular para facilitar su mantenimiento:
 
 ---
 
-Desarrollado con ❤️ para la comunidad de Ciencia de Datos.
