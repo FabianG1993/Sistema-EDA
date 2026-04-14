@@ -26,6 +26,7 @@
     const sectionTitle = document.getElementById('sectionTitle');
     const stepIndicator = document.getElementById('stepIndicator');
     const datasetInfo = document.getElementById('datasetInfo');
+    const resetBtn = document.getElementById('resetBtn');
 
     const sectionNames = {
         upload: 'Cargar Datos',
@@ -56,7 +57,7 @@
         if (sectionId !== 'upload' && !analysisRun) {
             console.log('Navegación restringida: primero cargue datos.');
         }
-        
+
         // Update sections
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
         const target = document.getElementById(sectionId);
@@ -129,11 +130,11 @@
         try {
             loadingOverlay.style.display = 'flex';
             loadingText.textContent = 'Cargando datos de ejemplo...';
-            
+
             const response = await fetch('sample_data.csv');
             const blob = await response.blob();
             const file = new File([blob], 'sample_data_ejemplo.csv', { type: 'text/csv' });
-            
+
             await handleFile(file);
             loadingOverlay.style.display = 'none';
         } catch (err) {
@@ -217,6 +218,19 @@
        Start Full Analysis
        ======================================== */
     startAnalysisBtn.addEventListener('click', runFullAnalysis);
+
+    // Evento para el botón de reiniciar sistema
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function () {
+            // Preguntamos al usuario para evitar clics accidentales
+            const isConfirmed = confirm("¿Estás seguro de que deseas iniciar un nuevo análisis? Se borrarán todos los gráficos y hallazgos actuales.");
+
+            if (isConfirmed) {
+                // Si acepta, recargamos la página limpiamente desde la caché del navegador
+                window.location.reload();
+            }
+        });
+    }
 
     async function runFullAnalysis() {
         loadingOverlay.style.display = 'flex';
@@ -1001,6 +1015,11 @@
     async function exportPDF() {
         if (!analysisRun) return;
 
+        if (typeof window.jspdf === 'undefined') {
+            alert('Error: La librería jsPDF no se pudo cargar. Verifique su conexión y recargue la página.');
+            return;
+        }
+
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
         const pageW = pdf.internal.pageSize.getWidth();   // 210
@@ -1121,19 +1140,19 @@
             // CAPTURE EACH SECTION
             // ============================================
             const sectionsToCapture = [
-                { id: 'structure',      name: 'Estructura y Dimensiones' },
-                { id: 'types',          name: 'Tipos de Variables' },
-                { id: 'missing',        name: 'Valores Nulos' },
-                { id: 'descriptive',    name: 'Estadísticas Descriptivas' },
-                { id: 'distribution',   name: 'Distribución de Variables' },
-                { id: 'outliers',       name: 'Valores Atípicos' },
-                { id: 'bivariate',      name: 'Relaciones entre Variables' },
-                { id: 'correlation',    name: 'Matriz de Correlaciones' },
+                { id: 'structure', name: 'Estructura y Dimensiones' },
+                { id: 'types', name: 'Tipos de Variables' },
+                { id: 'missing', name: 'Valores Nulos' },
+                { id: 'descriptive', name: 'Estadísticas Descriptivas' },
+                { id: 'distribution', name: 'Distribución de Variables' },
+                { id: 'outliers', name: 'Valores Atípicos' },
+                { id: 'bivariate', name: 'Relaciones entre Variables' },
+                { id: 'correlation', name: 'Matriz de Correlaciones' },
                 { id: 'visualizations', name: 'Visualizaciones Clave' },
-                { id: 'duplicates',     name: 'Detección de Duplicados' },
-                { id: 'quality',        name: 'Calidad y Consistencia' },
-                { id: 'findings',       name: 'Hallazgos Principales' },
-                { id: 'nextsteps',      name: 'Próximos Pasos' },
+                { id: 'duplicates', name: 'Detección de Duplicados' },
+                { id: 'quality', name: 'Calidad y Consistencia' },
+                { id: 'findings', name: 'Hallazgos Principales' },
+                { id: 'nextsteps', name: 'Próximos Pasos' },
             ];
 
             let pageNum = 1; // Cover is page 1

@@ -21,6 +21,10 @@ El sistema realiza un flujo de trabajo de **14 pasos de análisis**:
 13. **Generación de hallazgos**: Motor inteligente que resume los descubrimientos más importantes.
 14. **Hoja de ruta (Next Steps)**: Recomendaciones automáticas para limpieza, feature engineering y modelado.
 
+Además, ofrece herramientas de gestión de sesión:
+- **📦 Nuevo Análisis**: Reinicio rápido de la sesión para comenzar con un nuevo dataset de forma limpia.
+- **📄 Exportación Flexible**: Reportes profesionales en **PDF** (captura visual de alta calidad) y **Markdown** (resumen estructural de texto).
+
 ## 🚀 Tecnologías utilizadas
 
 -   **Core**: HTML5 Semántico y JavaScript ES6+.

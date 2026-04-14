@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sistema EDA - Herramienta profesional de Análisis Exploratorio de Datos interactivo">
+    <meta name="description"
+        content="Sistema EDA - Herramienta profesional de Análisis Exploratorio de Datos interactivo">
     <title>Sistema EDA | Análisis Exploratorio de Datos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Animated Background -->
     <div class="bg-grid"></div>
@@ -28,30 +33,52 @@
             </div>
         </div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#upload" class="nav-link active" data-section="upload"><i class="fas fa-cloud-upload-alt"></i><span>Cargar Datos</span></a></li>
-            <li><a href="#structure" class="nav-link disabled" data-section="structure"><i class="fas fa-th-large"></i><span>Estructura</span></a></li>
-            <li><a href="#types" class="nav-link disabled" data-section="types"><i class="fas fa-tags"></i><span>Tipos de Variables</span></a></li>
-            <li><a href="#missing" class="nav-link disabled" data-section="missing"><i class="fas fa-exclamation-triangle"></i><span>Valores Nulos</span></a></li>
-            <li><a href="#descriptive" class="nav-link disabled" data-section="descriptive"><i class="fas fa-calculator"></i><span>Estadísticas</span></a></li>
-            <li><a href="#distribution" class="nav-link disabled" data-section="distribution"><i class="fas fa-chart-bar"></i><span>Distribución</span></a></li>
-            <li><a href="#outliers" class="nav-link disabled" data-section="outliers"><i class="fas fa-dot-circle"></i><span>Outliers</span></a></li>
-            <li><a href="#bivariate" class="nav-link disabled" data-section="bivariate"><i class="fas fa-project-diagram"></i><span>Relaciones</span></a></li>
-            <li><a href="#correlation" class="nav-link disabled" data-section="correlation"><i class="fas fa-border-all"></i><span>Correlaciones</span></a></li>
-            <li><a href="#visualizations" class="nav-link disabled" data-section="visualizations"><i class="fas fa-chart-pie"></i><span>Visualizaciones</span></a></li>
-            <li><a href="#duplicates" class="nav-link disabled" data-section="duplicates"><i class="fas fa-clone"></i><span>Duplicados</span></a></li>
-            <li><a href="#quality" class="nav-link disabled" data-section="quality"><i class="fas fa-check-double"></i><span>Calidad</span></a></li>
-            <li><a href="#findings" class="nav-link disabled" data-section="findings"><i class="fas fa-lightbulb"></i><span>Hallazgos</span></a></li>
-            <li><a href="#nextsteps" class="nav-link disabled" data-section="nextsteps"><i class="fas fa-rocket"></i><span>Próximos Pasos</span></a></li>
+            <li><a href="#upload" class="nav-link active" data-section="upload"><i
+                        class="fas fa-cloud-upload-alt"></i><span>Cargar Datos</span></a></li>
+            <li><a href="#structure" class="nav-link disabled" data-section="structure"><i
+                        class="fas fa-th-large"></i><span>Estructura</span></a></li>
+            <li><a href="#types" class="nav-link disabled" data-section="types"><i class="fas fa-tags"></i><span>Tipos
+                        de Variables</span></a></li>
+            <li><a href="#missing" class="nav-link disabled" data-section="missing"><i
+                        class="fas fa-exclamation-triangle"></i><span>Valores Nulos</span></a></li>
+            <li><a href="#descriptive" class="nav-link disabled" data-section="descriptive"><i
+                        class="fas fa-calculator"></i><span>Estadísticas</span></a></li>
+            <li><a href="#distribution" class="nav-link disabled" data-section="distribution"><i
+                        class="fas fa-chart-bar"></i><span>Distribución</span></a></li>
+            <li><a href="#outliers" class="nav-link disabled" data-section="outliers"><i
+                        class="fas fa-dot-circle"></i><span>Outliers</span></a></li>
+            <li><a href="#bivariate" class="nav-link disabled" data-section="bivariate"><i
+                        class="fas fa-project-diagram"></i><span>Relaciones</span></a></li>
+            <li><a href="#correlation" class="nav-link disabled" data-section="correlation"><i
+                        class="fas fa-border-all"></i><span>Correlaciones</span></a></li>
+            <li><a href="#visualizations" class="nav-link disabled" data-section="visualizations"><i
+                        class="fas fa-chart-pie"></i><span>Visualizaciones</span></a></li>
+            <li><a href="#duplicates" class="nav-link disabled" data-section="duplicates"><i
+                        class="fas fa-clone"></i><span>Duplicados</span></a></li>
+            <li><a href="#quality" class="nav-link disabled" data-section="quality"><i
+                        class="fas fa-check-double"></i><span>Calidad</span></a></li>
+            <li><a href="#findings" class="nav-link disabled" data-section="findings"><i
+                        class="fas fa-lightbulb"></i><span>Hallazgos</span></a></li>
+            <li><a href="#nextsteps" class="nav-link disabled" data-section="nextsteps"><i
+                        class="fas fa-rocket"></i><span>Próximos Pasos</span></a></li>
         </ul>
         <div class="sidebar-footer">
+
             <button id="exportPdfBtn" class="btn-export disabled" disabled>
                 <i class="fas fa-file-pdf"></i>
                 <span>Exportar PDF</span>
             </button>
+
             <button id="exportMdBtn" class="btn-export-secondary disabled" disabled>
                 <i class="fas fa-file-alt"></i>
                 <span>Exportar Markdown</span>
             </button>
+
+            <button id="resetBtn" class="btn-reset">
+                <i class="fas fa-trash-alt"></i>
+                <span>Nuevo Análisis</span>
+            </button>
+
         </div>
     </nav>
 
@@ -94,7 +121,8 @@
                         <button class="btn-primary" id="browseBtn">
                             <i class="fas fa-folder-open"></i> Explorar Archivos
                         </button>
-                        <button class="btn-secondary" id="loadSampleBtn" style="border-color:var(--accent-purple); color:var(--accent-purple)">
+                        <button class="btn-secondary" id="loadSampleBtn"
+                            style="border-color:var(--accent-purple); color:var(--accent-purple)">
                             <i class="fas fa-vial"></i> Usar Datos de Ejemplo
                         </button>
                     </div>
@@ -262,10 +290,12 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
     <script src="eda-engine.js"></script>
     <script src="charts.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
